@@ -10,7 +10,7 @@ import config, { EnvironmentEnum } from '../env/index';
 import * as mongo from 'connect-mongo';
 import { HttpError } from '../error/index';
 import { sendHttpErrorModule } from '../error/sendHttpError';
-const MongoStore: mongo.MongoStoreFactory = mongo(session);
+//const MongoStore: mongo.MongoStoreFactory = mongo(session);
 
 /**
  * @export
@@ -45,18 +45,18 @@ export function configure(app: express.Application): void {
      *      in: cookie
      *      name: sid
      */
-    app.use(session({
-        resave: true,
-        saveUninitialized: true,
-        secret: config.secret,
-        name: 'api.sid',
-        store: new MongoStore({
-            url: `${config.database.MONGO_DB_CONNECTION_TYPE}://${config.database.MONGO_DB_USER}:${config.database.MONGO_DB_PASS}@${config.database.MONGO_DB_HOST}/${config.database.MONGO_DB_NAME}?authSource=admin`,            
-            autoReconnect: true
-        })
-    }));
+    // app.use(session({
+    //     resave: true,
+    //     saveUninitialized: true,
+    //     secret: config.secret,
+    //     name: 'api.sid',
+    //     store: new MongoStore({
+    //         url: `${config.database.MONGO_DB_CONNECTION_TYPE}://${config.database.MONGO_DB_USER}:${config.database.MONGO_DB_PASS}@${config.database.MONGO_DB_HOST}/${config.database.MONGO_DB_NAME}?authSource=admin`,            
+    //         autoReconnect: true
+    //     })
+    // }));
     app.use(passport.initialize());
-    app.use(passport.session());
+    //app.use(passport.session());
     // custom errors
     app.use(sendHttpErrorModule);
 

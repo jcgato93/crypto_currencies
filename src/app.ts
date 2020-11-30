@@ -2,6 +2,7 @@ import express = require('express');
 import env from './config/env';
 import * as Middleware from './config/middleware/middleware'
 import * as serverHandlers from './config/server/serverHandlers';
+import * as Routes from './routes';
 
 
 // Create a new express application instance
@@ -15,7 +16,7 @@ Middleware.configure(app);
 /**
  * @constructs express.Application Routes
  */
-//Routes.init(app);
+Routes.init(app);
 
 /**
  * @constructs express.Application Error Handler

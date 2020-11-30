@@ -23,6 +23,7 @@ export const db: mongoose.Connection = mongoose.createConnection(MONGO_URI, conn
 // handlers
 /**
  * A really nice hack to change the colors (https://tforgione.fr/posts/ansi-escape-codes/)
+ * Also, you can use chalk (https://www.npmjs.com/package/chalk)
  */
 db.on('connecting', () => {
     console.log('\x1b[32m', 'MongoDB :: connecting');
