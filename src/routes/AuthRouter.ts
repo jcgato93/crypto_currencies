@@ -22,25 +22,26 @@ const router: Router = Router();
  *          schema:
  *            $ref: '#/components/schemas/UserSchema'
  *          example:
+ *            name: test_name
+ *            lastname: test_lastname
+ *            prefered_currency: ars
  *            username: username.test 
- *            password: test_test
+ *            password: test123456
+ *              
  *    responses:
  *      200:
  *        description: user successfuly signed in
  *        content:
  *          appication/json:
  *            example:
- *              status: 200
- *              logged: true
- *              message: Sign in successfull!!
+ *              access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmM3MjE2YzA0M2M1YjQ0ODg4YjA0MmYiLCJ1c2VybmFtZSI6InRlc3QiLCJwcmVmZXJlZEN1cnJlbmN5IjoiYXJzIiwiaWF0IjoxNjA2ODg1NzQwLCJleHAiOjE2MDY4ODY2NDB9.1Nhc-UH2ZU5-kbgeEn8fvr2F0uA25-_j3km_opkN-cE
  *      400:
  *        description: sign in failed
  *        content:
  *          application/json:
  *            example:
  *              status: 400
- *              logged: false
- *              message: username already exists
+ *              message: This username already exists
  */
 router.post('/signup', AuthComponent.signup);
 
@@ -62,54 +63,24 @@ router.post('/signup', AuthComponent.signup);
  *            $ref: '#/components/schemas/UserSchema'
  *          example:
  *            username: username.test
- *            password: test_test
+ *            password: test123456
  *    responses:
  *      200:
  *        description: user successfuly logged
  *        content:
  *          appication/json:
  *            example:
- *              status: 200
- *              logged: true
- *              message: Successfully logged!
+ *              access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZmM2OTE1ZWUxMmVjYjFjNjg3N2I5YTAiLCJ1c2VybmFtZSI6InRlc3QiLCJwcmVmZXJlZEN1cnJlbmN5IjoiQVJTIiwiaWF0IjoxNjA2ODc4NTM1LCJleHAiOjE2MDY4Nzk0MzV9.ccdCzUFMR1VKpK0l8A5YiqjEX88bkGbKdFbTJsvjeak
+
  *      401:
  *        description: Not logged, invalid credentials
  *        content:
  *          application/json:
  *            example:
- *              status: 401
  *              logged: false
  *              message: Invalid credentials
  */
 router.post('/login', AuthComponent.login);
-/**
- * POST method route
- * @example http://localhost:3000
- * 
- * @swagger
- * /auth/logout/:
- *  post:
- *    description: Loogout from application
- *    tags: ["auth"]
- *    responses:
- *      200:
- *        description: users successfuly logout
- *        content:
- *          application/json:
- *            example:
- *              status: 200
- *              logged: false
- *              message: Successfuly logged out
- *      401:
- *        description: cant logout user, because he didnt login to app
- *        content:
- *          application/json:
- *            example:
- *              status: 401
- *              logged: false
- *              message: You are not authorized to app. Can't logout
- */
-router.post('/logout', AuthComponent.logout);
 
 
 /**

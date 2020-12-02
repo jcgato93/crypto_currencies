@@ -27,11 +27,7 @@ abstract class Validation {
     constructor() {
         this.customJoi = Joi.extend((joi) => {
             return {
-                type: 'objectId',
-                name: 'objectId',
-                language: {
-                    base: this.messageObjectId
-                },
+                type: 'objectId',                                
                 base: joi.string(),
                 messages: {
                     'objectId.valid': '"{{#label}}" must be a valid mongo id'

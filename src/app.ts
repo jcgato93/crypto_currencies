@@ -1,4 +1,5 @@
 import express = require('express');
+import 'reflect-metadata';
 import env from './config/env';
 import * as Middleware from './config/middleware/middleware'
 import * as serverHandlers from './config/server/serverHandlers';

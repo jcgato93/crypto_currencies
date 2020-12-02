@@ -21,19 +21,18 @@ function passportRequestLogin(req: Request, res: Response, next: NextFunction, u
         if (err) return next(new HttpError(err));
 
 
-        const payload = { 
-            sub: user.id, 
+        const payload = {
+            sub: user.id,
             username: user.username,
-            preferedCurrency: user.prefered_currency,
-            iat: Date.now() + parseInt(env.auth_jwt_lifetime)
+            preferedCurrency: user.prefered_currency
         }
 
         const token = jwt.sign(payload, env.auth_jwt_secret, {
-            expiresIn: `${env.auth_jwt_lifetime}s`
+            expiresIn: `${env.auth_jwt_lifetime}m`
         });
 
-        res.status(200).json({            
-            access_token: token,            
+        res.status(200).json({
+            access_token: token,
         });
     });
 }
@@ -46,7 +45,7 @@ function passportRequestLogin(req: Request, res: Response, next: NextFunction, u
  * @returns {Promise < void >}
  */
 export async function signup(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
+    try {        
         const user: IUserModel = await AuthService.createUser(req.body);
 
         passportRequestLogin(req, res, next, user, 'Sign in successfull');
@@ -54,10 +53,7 @@ export async function signup(req: Request, res: Response, next: NextFunction): P
         if (error.code === 500) {
             return next(new HttpError(error.message.status, error.message));
         }
-        res.json({
-            status: 400,
-            message: error.message
-        });
+        next(new HttpError(400, error.message));
     }
 }
 
@@ -69,42 +65,17 @@ export async function signup(req: Request, res: Response, next: NextFunction): P
  * @returns {Promise < void >}
  */
 export async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
-    passport.authenticate('local', {session: false}, (err: Error, user: IUserModel) => {
+    passport.authenticate('local', { session: false }, (err: Error, user: IUserModel) => {
         if (err) {
             return next(new HttpError(400, err.message));
         }
 
         if (!user) {
-            return res.status(401).json({                
+            return res.status(401).json({
                 logged: false,
                 message: 'Invalid credentials!'
             });
         }
         passportRequestLogin(req, res, next, user, 'Sign in successfull');
     })(req, res, next);
-}
-/**
- * @export
- * @param {Request} req 
- * @param {Response} res 
- * @param {NextFunction} next
- * @returns {Promise < void >} 
- */
-export async function logout(req: Request, res: Response, next: NextFunction): Promise<void> {
-
-    if (!req.user) {
-        res.status(401).json({            
-            logged: false,
-            message: 'You are not authorized to app. Can\'t logout'
-        });
-    }
-
-    if (req.user) {
-        req.logout();
-        res.status(200).json({            
-            logged: false,
-            message: 'Successfuly logged out!'
-        });
-    }
-
 }

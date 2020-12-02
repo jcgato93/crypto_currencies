@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "set NODE_ENV=test && mocha -r ts-node/register src/test/index.ts --exit",
     "tsc": "tsc",
     "ts:watch": "tsc -w",
-    "dev": "npm run docs:generate && ts-node-dev --respawn --transpile-only src/app.ts",
+    "dev": "set NODE_ENV=development && npm run docs:generate && ts-node-dev --respawn --transpile-only src/app.ts",
     "prod": "tsc && node ./build/app.js",
     "docs:generate": "swagger-jsdoc -d swaggerDef.js -o swagger.json"
   },
@@ -15,12 +15,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/dotenv-flow": "^3.1.0",
+    "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
+    "class-transformer": "^0.3.1",
     "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "helmet": "^4.2.0",
@@ -30,9 +34,11 @@
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/bcrypt": "^3.0.0",
     "@types/chai": "^4.2.14",
     "@types/chalk": "^2.2.0",
@@ -44,6 +50,7 @@
     "@types/express-session": "^1.17.3",
     "@types/joi": "^14.3.4",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/mocha": "^8.0.4",
     "@types/mongoose": "^5.10.1",
     "@types/passport": "^1.0.4",
     "@types/passport-http": "^0.3.8",

@@ -1,6 +1,5 @@
+import chalk = require('chalk');
 import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 // Environments
 export enum EnvironmentEnum {
@@ -9,6 +8,16 @@ export enum EnvironmentEnum {
     TEST = 'test'
 }
 
+
+export const NODE_ENV: EnvironmentEnum = process.env.NODE_ENV?.toString().trim() as EnvironmentEnum || EnvironmentEnum.DEVELOPMENT;
+
+if(NODE_ENV !== EnvironmentEnum.PRODUCTION) {
+    dotenv.config({path: `${__dirname}/../../../.env.${NODE_ENV}`});
+} else {
+    dotenv.config();
+}
+
+  
 interface IConfig {
     port: string | number;
     database: {
@@ -27,14 +36,14 @@ interface IConfig {
     auth_jwt_lifetime: string;
 }
 
-export const NODE_ENV: EnvironmentEnum = process.env.NODE_ENV as EnvironmentEnum || EnvironmentEnum.DEVELOPMENT;
+
 
 
 // Development Environment Configuration
 const development: IConfig = {
     port: process.env.PORT || 3000,
     database: {
-        MONGO_DB_CONNECTION_TYPE: process.env.MONGODB_URI || 'mongodb',
+        MONGO_DB_CONNECTION_TYPE: process.env.MONGO_DB_CONNECTION_TYPE || 'mongodb',
         MONGO_DB_NAME: process.env.MONGODB_DB_MAIN || 'users_db',
         MONGO_DB_HOST: process.env.MONGO_DB_HOST || 'localhost',
         MONGO_DB_USER: process.env.MONGO_DB_USER || 'user',
@@ -52,7 +61,7 @@ const development: IConfig = {
 const production: IConfig = {
     port: process.env.PORT || 3000,
     database: {
-        MONGO_DB_CONNECTION_TYPE: process.env.MONGODB_URI || 'mongodb',
+        MONGO_DB_CONNECTION_TYPE: process.env.MONGO_DB_CONNECTION_TYPE || 'mongodb',
         MONGO_DB_NAME: process.env.MONGODB_DB_MAIN || 'users_db',
         MONGO_DB_HOST: process.env.MONGO_DB_HOST || 'localhost',
         MONGO_DB_USER: process.env.MONGO_DB_USER || 'user',
@@ -70,7 +79,7 @@ const production: IConfig = {
 const test: IConfig = {
     port: process.env.PORT || 3000,
     database: {
-        MONGO_DB_CONNECTION_TYPE: process.env.MONGODB_URI || 'mongodb',
+        MONGO_DB_CONNECTION_TYPE: process.env.MONGO_DB_CONNECTION_TYPE || 'mongodbaaaa',
         MONGO_DB_NAME: process.env.MONGODB_DB_MAIN || 'users_db',
         MONGO_DB_HOST: process.env.MONGO_DB_HOST || 'localhost',
         MONGO_DB_USER: process.env.MONGO_DB_USER || 'user',

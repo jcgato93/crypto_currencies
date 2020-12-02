@@ -3,6 +3,8 @@ import UserModel, { IUserModel } from './user.model';
 import UserValidation from './user.validation';
 import { IUserService } from './user.interface';
 import { Types } from 'mongoose';
+import userModel from './user.model';
+import CurrencyService  from '../Currency/currency.service';
 
 /**
  * @export
@@ -40,6 +42,29 @@ const UserService: IUserService = {
             return await UserModel.findOne({
                 _id: Types.ObjectId(id)
             });
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    async addCurrency(userId:string, currencyId: string): Promise<void> {
+        try {
+
+
+            // check if currencyId exist
+            const currency = await CurrencyService.findOne(currencyId)
+            if(currency === null) {
+                throw new Error('Currency id does not exist')
+            }
+
+            await userModel.updateOne({
+                _id: Types.ObjectId(userId)
+            }, 
+            {$addToSet: {currencies: currencyId}
+            });
+                        
+            return
+            
         } catch (error) {
             throw new Error(error.message);
         }

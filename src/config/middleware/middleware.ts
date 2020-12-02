@@ -40,21 +40,11 @@ export function configure(app: express.Application): void {
      * @swagger
      * components:
      *  securitySchemes:
-     *    cookieAuth:
-     *      type: apiKey
-     *      in: cookie
-     *      name: sid
+     *    bearerAuth:
+     *      type: http
+     *      scheme: bearer
+     *      bearerFormat: JWT
      */
-    // app.use(session({
-    //     resave: true,
-    //     saveUninitialized: true,
-    //     secret: config.secret,
-    //     name: 'api.sid',
-    //     store: new MongoStore({
-    //         url: `${config.database.MONGO_DB_CONNECTION_TYPE}://${config.database.MONGO_DB_USER}:${config.database.MONGO_DB_PASS}@${config.database.MONGO_DB_HOST}/${config.database.MONGO_DB_NAME}?authSource=admin`,            
-    //         autoReconnect: true
-    //     })
-    // }));
     app.use(passport.initialize());
     //app.use(passport.session());
     // custom errors

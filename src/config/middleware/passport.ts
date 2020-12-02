@@ -5,6 +5,7 @@ import HttpError from '../error';
 import UserModel, { IUserModel } from '../../components/User/user.model';
 import { NextFunction, Request, Response } from 'express';
 import { Strategy, ExtractJwt } from 'passport-jwt';
+import * as jwt from 'jsonwebtoken';
 import env from '../env';
 
 
@@ -113,7 +114,8 @@ passport.use(
  * @description Login Required middleware.
  */
 export function ensureAuthenticated(req: Request, res: Response, next: NextFunction): void {
-    passport.authenticate('jwt', {session: false}, (err, user, info)=>{        
+    passport.authenticate('jwt', {session: false}, (err, user, info)=>{
+                        
         // Invalid token
         if(info){ return next(new HttpError(401, http.STATUS_CODES[401])); }
 

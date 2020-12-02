@@ -3,7 +3,6 @@ import * as connections from '../../config/connection/connection';
 import { Document, Schema } from 'mongoose';
 import { NextFunction } from 'express';
 
-
 /**
  * @export
  * @interface IUserModel
@@ -14,7 +13,8 @@ export interface IUserModel extends Document {
     lastname: string;
     username: string;
     password: string;
-    prefered_currency: string;    
+    prefered_currency: string;
+    currencies: string[];
 
     comparePassword: (password: string) => Promise<boolean>;
 }
@@ -44,7 +44,7 @@ export interface IUserModel extends Document {
  *          type: string
  *        prefered_currency:
  *          type: string
- *          enum: [ARS, USD, EUR]
+ *          enum: [ars, usd, eur]
  *    Users:
  *      type: array
  *      items:
@@ -72,8 +72,12 @@ const UserSchema: Schema = new Schema({
     prefered_currency: {
         type: String,
         required: true,
-        enum: ['ARS', 'USD', 'EUR']
-    },        
+        enum: ['ars', 'usd', 'eur']
+    },
+    currencies: {
+        type: [String],
+        required: false        
+    } 
 }, {
     collection: 'usermodel',
     versionKey: false

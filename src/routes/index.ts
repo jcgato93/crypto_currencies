@@ -10,6 +10,7 @@ import { Passport } from "passport";
 
 import AuthRouter from './AuthRouter';
 import UserRouter from './UserRouter';
+import CurrencyRouter from './CurrenciyRouter';
 
 if (NODE_ENV === EnvironmentEnum.DEVELOPMENT) {
     try {
@@ -42,6 +43,16 @@ export function init(app: express.Application): void {
     app.use('/v1/users',
         passportConfig.ensureAuthenticated,
         UserRouter);
+
+    /**
+     * @description
+     *  Forwards any requests to the /v1/currencies URI to our CurrencyRouter
+     *  Also, check if user authenticated
+     * @constructs
+     */
+    app.use('/v1/currencies',
+    passportConfig.ensureAuthenticated,
+    CurrencyRouter);
 
     /**
      * @description Forwards any requests to the /auth URI to our AuthRouter

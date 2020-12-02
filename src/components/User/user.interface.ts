@@ -26,6 +26,14 @@ export interface IUserService {
      */
     insert(IUserModel: IUserModel): Promise<IUserModel>;
 
+    
+    /**
+     * @param {string} currencyId
+     * @returns {Promise<void>}
+     * @memberof IUserService
+     */
+    addCurrency(userId:string, currencyId: string): Promise<void>;
+
     /**
      * @param {string} id
      * @returns {Promise<IUserModel>}
