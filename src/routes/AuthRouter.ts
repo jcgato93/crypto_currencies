@@ -41,7 +41,8 @@ const router: Router = Router();
  *          application/json:
  *            example:
  *              status: 400
- *              message: This username already exists
+ *              name: Error
+ *              message: "Error: This username already exists"
  */
 router.post('/signup', AuthComponent.signup);
 

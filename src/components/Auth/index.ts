@@ -53,7 +53,10 @@ export async function signup(req: Request, res: Response, next: NextFunction): P
         if (error.code === 500) {
             return next(new HttpError(error.message.status, error.message));
         }
-        next(new HttpError(400, error.message));
+        res.json({
+            status: 400,
+            message: error.message
+        });
     }
 }
 

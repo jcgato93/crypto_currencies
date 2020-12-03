@@ -14,8 +14,8 @@ import { CurrencyResponse } from './response/currency.response';
  */
 export async function findAll(req: Request, res: Response, next: NextFunction): Promise < void > {
     try {
-        const page =  req.params.page || 1;
-        const per_page = req.params.per_page || 25;
+        const page =  req.query.page || 1;
+        const per_page = req.query.per_page || 50;
         const user: IUserModel = req.user as IUserModel;
         const currencies: CurrencyResponse[] = await CurrencyService.findAll(
             user.prefered_currency as PreferedCurrencyEnum,

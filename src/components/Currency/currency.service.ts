@@ -14,15 +14,15 @@ import { CurrencyUserListResponse } from './response/currencyUserList.response';
  */
 const CurrencyService: ICurrencyService = {
     /**
-     * @returns {Promise < Currency[] >}
+     * @returns {Promise < CurrencyResponse[] >}
      * @memberof CurrencyService
      */
-    async findAll(preferedCurrency: PreferedCurrencyEnum, page = 1, per_page = 25): Promise<CurrencyResponse[]> {
-        try {            
+    async findAll(preferedCurrency: PreferedCurrencyEnum, page = 1, per_page = 50): Promise<CurrencyResponse[]> {
+        try {
             const currencies: AxiosResponse = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${preferedCurrency.toLowerCase()}&page=${page}&per_page=${per_page}`)
             const data = currencies.data as CurrencyResponse[];
-            const result = plainToClass(CurrencyResponse, data, {excludeExtraneousValues: true}) as CurrencyResponse[];
-            
+            const result = plainToClass(CurrencyResponse, data, { excludeExtraneousValues: true }) as CurrencyResponse[];
+
             return result;
         } catch (error) {
             throw new Error(error.message);
@@ -37,7 +37,7 @@ const CurrencyService: ICurrencyService = {
         try {
             const currencies: AxiosResponse = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${currencyId}`);
             const data: CurrencyResponse[] = currencies.data;
-            if(data.length > 0) {
+            if (data.length > 0) {
                 return data[0]
             }
 
@@ -56,8 +56,8 @@ const CurrencyService: ICurrencyService = {
     async findCurrenciesDetail(currenciesId: string[], limit = 25, order: 'market_cap_desc' | 'market_cap_asc' = 'market_cap_desc'): Promise<CurrencyUserListResponse[]> {
         try {
 
-            if(limit < 1 || limit > 25) { limit = 25}
-            
+            if (limit < 1 || limit > 25) { limit = 25 }
+
             const validate: Joi.ValidationResult = CurrencyValidation.findCurrenciesDetail(currenciesId);
 
             if (validate.error) {
@@ -72,16 +72,16 @@ const CurrencyService: ICurrencyService = {
             // Get prices vs usd, eur, ars
             const prices: AxiosResponse = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd%2Cars%2Ceur`);
 
-            
+
             const data: CurrencyUserListResponse[] = currencies.data;
-            
+
             const response = data.map(currency => {
                 const values = prices.data[currency.id];
                 currency.current_usd_price = values.usd;
                 currency.current_eur_price = values.eur;
                 currency.current_ars_price = values.ars;
-                
-                return plainToClass(CurrencyUserListResponse, currency, { excludeExtraneousValues: true});
+
+                return plainToClass(CurrencyUserListResponse, currency, { excludeExtraneousValues: true });
             });
 
             return response.slice(0, limit);

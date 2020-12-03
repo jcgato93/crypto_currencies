@@ -6,7 +6,6 @@ import * as chalk from 'chalk';
 import { NODE_ENV, EnvironmentEnum } from '../config/env';
 // eslint-disable-next-line @typescript-eslint/ban-types
 let swaggerDoc: Object;
-import { Passport } from "passport";
 
 import AuthRouter from './AuthRouter';
 import UserRouter from './UserRouter';
@@ -51,8 +50,10 @@ export function init(app: express.Application): void {
      * @constructs
      */
     app.use('/v1/currencies',
-    passportConfig.ensureAuthenticated,
-    CurrencyRouter);
+    //passportConfig.ensureAuthenticated,
+    //CurrencyRouter
+    (req,res,nex) => res.status(200).json({message: 'test'})
+    );
 
     /**
      * @description Forwards any requests to the /auth URI to our AuthRouter

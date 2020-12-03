@@ -2,7 +2,6 @@ import * as Joi from 'joi';
 import Validation from '../validation';
 import { IUserModel } from '../User/user.model';
 import { PreferedCurrencyEnum } from '../Currency/currency.model';
-import { SignupRequest } from './request/signup.request';
 
 /**
  * @export
@@ -24,7 +23,7 @@ class AuthValidation extends Validation {
      * @memberof UserValidation
      */
     createUser(
-        params: SignupRequest
+        params: IUserModel
     ): Joi.ValidationResult {
         const schema: Joi.Schema = Joi.object().keys({
             password: Joi.string().alphanum().min(8).required(),

@@ -17,7 +17,7 @@ const connectOptions: IConnectOptions = {
 };
 
 const MONGO_URI = `${config.database.MONGO_DB_CONNECTION_TYPE}://${config.database.MONGO_DB_USER}:${config.database.MONGO_DB_PASS}@${config.database.MONGO_DB_HOST}/${config.database.MONGO_DB_NAME}?authSource=admin`;
-console.log(MONGO_URI);
+
 export const db: mongoose.Connection = mongoose.createConnection(MONGO_URI, connectOptions);
 
 // handlers
