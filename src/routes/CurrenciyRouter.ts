@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { CurrencyComponent } from '../components';
+import { CurrencyComponent } from '../modules';
 
 /**
  * @constant {express.Router}

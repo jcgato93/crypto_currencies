@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import { PreferedCurrencyEnum } from '../Currency/currency.model';
 import Validation from '../validation';
 import { IUserModel } from './user.model';
 
@@ -26,10 +27,11 @@ class UserValidation extends Validation {
         params: IUserModel
     ): Joi.ValidationResult {
         const schema: Joi.Schema = Joi.object().keys({
+            password: Joi.string().alphanum().min(8).required(),
             name: Joi.string().required(),
-            email: Joi.string().email({
-                minDomainSegments: 2
-            }).required()
+            lastname: Joi.string().required(),
+            prefered_currency: Joi.string().valid(PreferedCurrencyEnum.ARGENTINE_PESO, PreferedCurrencyEnum.DOLLAR, PreferedCurrencyEnum.EURO).required(),
+            username: Joi.string().required(),
         });
 
         return schema.validate(params);

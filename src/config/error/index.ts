@@ -16,7 +16,7 @@ export class HttpError extends Error {
      * @param {string} [message]
      * @memberof HttpError
      */
-    constructor(status ? : number, message ? : string) {
+    constructor(status?: number, message?: string) {
         super(message);
 
         Error.captureStackTrace(this, this.constructor);

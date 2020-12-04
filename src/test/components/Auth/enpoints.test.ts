@@ -2,7 +2,7 @@
 import * as chai from 'chai';
 import { testServer } from "../../testServer";;
 import { signupRequest } from './mocks/auth.model.mocks';
-import userModel from '../../../components/User/user.model';
+import userModel from '../../../modules/User/user.model';
 chai.should();
 const expect = chai.expect;
 
@@ -75,15 +75,19 @@ describe('routes - api - auth', function () {
 
         });
     });
+
+
+
+    after('Delete mock user created in database', async () => {
+        try {
+            await userModel.deleteOne({ username: signupRequest.username });
+        } catch (error) {
+            console.log('Something went wrong after tests, seems your database doesnt cleaned');
+        }
+    });
 })
 
-after('Delete mock user created in database', async () => {
-    try {
-        await userModel.deleteOne({ username: signupRequest.username });
-    } catch (error) {
-        console.log('Something went wrong after tests, seems your database doesnt cleaned');
-    }
-});
+
 
 
 

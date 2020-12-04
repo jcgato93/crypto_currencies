@@ -1,5 +1,5 @@
-import { response, Router } from 'express';
-import { UserComponent } from '../components';
+import { Router } from 'express';
+import { UserComponent } from '../modules';
 
 /**
  * @constant {express.Router}
@@ -48,12 +48,15 @@ router.get('/', UserComponent.findOne);
  *    tags: ["users"]
  *    security:
  *      - bearerAuth: []
- *    parameters:
- *      - name: currency_id
- *        description: A valid currency id
- *        in: body
- *        required: true
- *        type: string
+ *    requestBody:
+ *      description: add currency
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/CurrencySchema'
+ *          example:
+ *            currency_id: bitcoin
  *    responses:
  *      200:
  *        description: OK

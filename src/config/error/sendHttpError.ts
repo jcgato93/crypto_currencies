@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { HttpError } from './index';
 import { NextFunction, Request } from 'express';
 

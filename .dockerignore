@@ -2,9 +2,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,windows,macos,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,windows,macos,linux
 
-### Linux ###
-*~
-
 ### custom ###
 mongo-volume/
 swagger.json

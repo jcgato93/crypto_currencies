@@ -32,7 +32,7 @@ abstract class Validation {
                 messages: {
                     'objectId.valid': '"{{#label}}" must be a valid mongo id'
                 },
-                coerce(value, helpers) {
+                coerce(value) {
                     return { value };
                 },
                 validate(value, helpers) {

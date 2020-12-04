@@ -1,7 +1,6 @@
 FROM node:10-alpine
-WORKDIR /srv/app
 COPY . .
 RUN npm install
+RUN npm run build
 EXPOSE 3000
-ENV NODE_ENV=production
-CMD ["node", "app.js"]
+CMD ["node", "build/app.js"]

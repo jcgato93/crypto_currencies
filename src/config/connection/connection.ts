@@ -7,6 +7,8 @@ interface IConnectOptions {
     reconnectInterval: number;
     loggerLevel ? : string;
     useNewUrlParser ? : boolean;
+    useCreateIndex?: boolean;
+    useFindAndModify?: boolean;
 }
 
 const connectOptions: IConnectOptions = {
@@ -14,11 +16,13 @@ const connectOptions: IConnectOptions = {
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 1000, // every second
     useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 };
 
 const MONGO_URI = `${config.database.MONGO_DB_CONNECTION_TYPE}://${config.database.MONGO_DB_USER}:${config.database.MONGO_DB_PASS}@${config.database.MONGO_DB_HOST}/${config.database.MONGO_DB_NAME}?authSource=admin`;
 
-export const db: mongoose.Connection = mongoose.createConnection(MONGO_URI, connectOptions);
+export const db: mongoose.Connection =  mongoose.createConnection(MONGO_URI, connectOptions) ;
 
 // handlers
 /**

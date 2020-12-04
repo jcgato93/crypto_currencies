@@ -13,13 +13,16 @@ services:
       - ./mongo-volume:/data/db
     ports: 
       - '27017-27019:27017-27019'
-  # app:
-  #   build: .
-  #   container_name: 'cryptocurrencies-container'
-  #   ports: 
-  #     - '3000:3000'
-  #   environment: 
-  #     - NODE_ENV=production
-  #     - MONGO_DB_HOST=database
-  #   depends_on: 
-  #     - database
+  app:
+    build: .
+    container_name: 'cryptocurrencies-container'
+    ports: 
+      - '3000:3000'
+    env_file:
+      - .env.development
+    environment: 
+      - NODE_ENV=production
+      - MONGO_DB_HOST=database      
+    depends_on: 
+      - database
+    restart: always

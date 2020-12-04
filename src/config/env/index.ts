@@ -1,4 +1,3 @@
-import chalk = require('chalk');
 import * as dotenv from 'dotenv';
 
 // Environments

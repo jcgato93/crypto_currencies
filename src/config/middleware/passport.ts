@@ -2,10 +2,9 @@ import * as http from 'http';
 import * as passport from 'passport';
 import * as passportLocal from 'passport-local';
 import HttpError from '../error';
-import UserModel, { IUserModel } from '../../components/User/user.model';
+import UserModel, { IUserModel } from '../../modules/User/user.model';
 import { NextFunction, Request, Response } from 'express';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import * as jwt from 'jsonwebtoken';
 import env from '../env';
 
 

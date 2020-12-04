@@ -1,16 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
-import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as helmet from 'helmet';
 import * as passport from 'passport';
-import * as session from 'express-session';
-import config, { EnvironmentEnum } from '../env/index';
-import * as mongo from 'connect-mongo';
+import { EnvironmentEnum, NODE_ENV } from '../env/index';
 import { HttpError } from '../error/index';
 import { sendHttpErrorModule } from '../error/sendHttpError';
-//const MongoStore: mongo.MongoStoreFactory = mongo(session);
 
 /**
  * @export
@@ -24,8 +21,6 @@ export function configure(app: express.Application): void {
     
     app.use(bodyParser.json());
     
-    // parse Cookie header and populate req.cookies with an object keyed by the cookie names.
-    app.use(cookieParser());
     
     // returns the compression middleware,will attempt to compress response bodies for all request that traverse through the middleware
     app.use(compression());
@@ -46,7 +41,9 @@ export function configure(app: express.Application): void {
      *      bearerFormat: JWT
      */
     app.use(passport.initialize());
-    //app.use(passport.session());
+    app.use(passport.session());
+
+    
     // custom errors
     app.use(sendHttpErrorModule);
 
@@ -91,6 +88,8 @@ export function initErrorHandler(app: express.Application): void {
             }
         }
 
-        console.error(error);
+        if(NODE_ENV === EnvironmentEnum.DEVELOPMENT) {
+            console.error(error);
+        }
     });
 }

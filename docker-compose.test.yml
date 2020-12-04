@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  database:
+    image: 'mongo'
+    container_name: 'mongo-container'
+    environment: 
+      - MONGO_INITDB_DATABASE=cryptocurrencies_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root_pass
+      - MONGO_USER=user
+      - MONGO_PASS=pass
+    ports: 
+      - '27017-27019:27017-27019'

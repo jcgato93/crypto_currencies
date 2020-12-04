@@ -11,18 +11,7 @@ import CurrencyService  from '../Currency/currency.service';
  * @implements {IUserModelService}
  */
 const UserService: IUserService = {
-    /**
-     * @returns {Promise < IUserModel[] >}
-     * @memberof UserService
-     */
-    async findAll(): Promise < IUserModel[] > {
-        try {
-            return await UserModel.find({});
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    },
-
+    
     /**
      * @param {string} id
      * @returns {Promise < IUserModel >}
@@ -47,14 +36,14 @@ const UserService: IUserService = {
         }
     },
 
-    async addCurrency(userId:string, currencyId: string): Promise<void> {
+    async addCurrency(userId:string, currencyId: string): Promise<boolean> {
         try {
 
 
             // check if currencyId exist
             const currency = await CurrencyService.findOne(currencyId)
             if(currency === null) {
-                throw new Error('Currency id does not exist')
+               return false;
             }
 
             await userModel.updateOne({
@@ -63,7 +52,7 @@ const UserService: IUserService = {
             {$addToSet: {currencies: currencyId}
             });
                         
-            return
+            return true;
             
         } catch (error) {
             throw new Error(error.message);
@@ -107,7 +96,7 @@ const UserService: IUserService = {
                 throw new Error(validate.error.message);
             }
             
-            const user: IUserModel = await UserModel.findOneAndRemove({
+            const user: IUserModel = await UserModel.findOneAndDelete({
                 _id: Types.ObjectId(id)
             });
 

@@ -50,9 +50,8 @@ export function init(app: express.Application): void {
      * @constructs
      */
     app.use('/v1/currencies',
-    //passportConfig.ensureAuthenticated,
-    //CurrencyRouter
-    (req,res,nex) => res.status(200).json({message: 'test'})
+    passportConfig.ensureAuthenticated,
+    CurrencyRouter
     );
 
     /**
@@ -82,7 +81,7 @@ export function init(app: express.Application): void {
      * @description No results returned mean the object is not found
      * @constructs
      */
-    app.use((req, res, next) => {
+    app.use((req, res) => {
         res.status(404).send(http.STATUS_CODES[404]);
     });
 

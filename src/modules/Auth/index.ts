@@ -16,7 +16,7 @@ import env from '../../config/env';
  * @param {IUserModel} user 
  * @param {string} resMessage 
  */
-function passportRequestLogin(req: Request, res: Response, next: NextFunction, user: IUserModel, resMessage: string): void {
+function passportRequestLogin(req: Request, res: Response, next: NextFunction, user: IUserModel): void {
     return req.logIn(user, (err) => {
         if (err) return next(new HttpError(err));
 
@@ -48,7 +48,7 @@ export async function signup(req: Request, res: Response, next: NextFunction): P
     try {        
         const user: IUserModel = await AuthService.createUser(req.body);
 
-        passportRequestLogin(req, res, next, user, 'Sign in successfull');
+        passportRequestLogin(req, res, next, user);
     } catch (error) {
         if (error.code === 500) {
             return next(new HttpError(error.message.status, error.message));
@@ -79,6 +79,6 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
                 message: 'Invalid credentials!'
             });
         }
-        passportRequestLogin(req, res, next, user, 'Sign in successfull');
+        passportRequestLogin(req, res, next, user);
     })(req, res, next);
 }

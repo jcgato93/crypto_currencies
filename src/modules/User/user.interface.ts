@@ -5,12 +5,7 @@ import { IUserModel } from './user.model';
  * @interface IUserService
  */
 export interface IUserService {
-
-    /**
-     * @returns {Promise<IUserModel[]>}
-     * @memberof IUserService
-     */
-    findAll(): Promise<IUserModel[]>;
+    
 
     /**
      * @param {string} code
@@ -32,7 +27,7 @@ export interface IUserService {
      * @returns {Promise<void>}
      * @memberof IUserService
      */
-    addCurrency(userId:string, currencyId: string): Promise<void>;
+    addCurrency(userId:string, currencyId: string): Promise<boolean>;
 
     /**
      * @param {string} id
