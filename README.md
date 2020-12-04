@@ -22,7 +22,7 @@ su base de datos, ejecute el siguiente comando desde la carpeta root
 ```
 
 2. Como segunda opción, se pueden cambiar las variables de entorno
-en el archivo <strong>.env.development <strong> con los datos de la 
+en el archivo <strong>.env.development </strong> con los datos de la 
 conexión a la base de datos, y posteriormente ejecutar los siguientes comandos.
 
 ```shell
@@ -54,7 +54,7 @@ ya que no tiene un volume asociado, por lo que luego de que el con
 Para inicializar la base de datos, solo se debe ejecutar el siguiente comando.
 
 ```shell
- $ docker-compose -f docker-compose.test.yml -d
+ $ docker-compose -f docker-compose.test.yml up -d
 ```
 
 ## Correr los Tests 🏃‍♀️

@@ -2,7 +2,7 @@ version: '3.7'
 services:
   database:
     image: 'mongo'
-    container_name: 'mongo-container'
+    container_name: 'mongo-container-test'
     environment: 
       - MONGO_INITDB_DATABASE=cryptocurrencies_db
       - MONGO_INITDB_ROOT_USERNAME=root

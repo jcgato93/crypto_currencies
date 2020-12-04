@@ -73,17 +73,15 @@ describe('routes - api - users', function () {
             done();
         });
 
-        it('should return status 400 - add invalid currency', (done) => {
+        it('should return status 404 - add invalid currency', (done) => {
             testServer()
                 .post('/v1/users/currencies')
                 .set('Authorization', 'Bearer ' + token)
                 .send({ currency_id: 'invalid_id' })
-                .expect((res) => {
-                    res.status.should.equal(400);
-                }).end((err, res) => {
+                .end((err, res) => {
+                    res.status.should.equal(404);
                     expect(res.body).to.eql({
-                        status: 400,
-                        name: "Error",
+                        status: 404,                        
                         message: "Currency id does not exist"
                     });
                     done();
@@ -101,7 +99,7 @@ describe('routes - api - users', function () {
                         status: 401,
                         name: "Error",
                         message: "Unauthorized"
-                    })
+                    });
                     done();
                 });
 

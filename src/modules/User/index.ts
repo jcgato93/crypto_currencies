@@ -74,8 +74,8 @@ export async function addCurrency(req: Request, res: Response, next: NextFunctio
         const { currency_id } = req.body as AddCurrencyRequest;
 
         const result = await UserService.addCurrency(user._id, currency_id);
-        if (!result) {
-            next(new HttpError(400, 'Currency id does not exist'));
+        if (!result) {            
+            res.status(404).json({status: 404, message: 'Currency id does not exist'})
         }
 
         res.status(200).send();
